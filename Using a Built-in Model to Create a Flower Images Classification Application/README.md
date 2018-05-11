@@ -9,7 +9,7 @@
 ### 1. 准备数据
 下载flowers数据集并上传至华为云对象存储服务器（OBS）桶中，操作步骤如下：
 
-**步骤 1** &#160; &#160; 下载并解压缩数据集压缩包“flower_photos.tgz”，flowers数据集的下载路径为：http://download.tensorflow.org/example_images/flower_photos.tgz。
+**步骤 1** &#160; &#160; 下载并解压缩数据集压缩包“flower_photos.tgz”，flowers数据集的下载路径为：http://download.tensorflow.org/example_images/flower_photos.tgz 。
 
 **步骤 2**&#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将数据集上传至华为云OBS桶中（假设OBS桶路径为：“s3://automation/data”）。 
 
@@ -155,4 +155,8 @@
     --labelsFilePath="xx/dls-tfserving-client/data/flowers/labels.txt" \
     --modelName="resnet_v1_50"
 
-**注意：这里3个参数host、port、以及model_name的值即为预测作业的IP地址、端口号和模型名称3个参数值。参数dataPath和labelsFilePath表示待预测图片和类别标签的路径。**
+**注意：**
+
+**这里3个参数host、port、以及model_name的值即为预测作业的IP地址、端口号和模型名称3个参数值。参数dataPath和labelsFilePath表示待预测图片和类别标签的路径。**
+
+**关于发起预测请求的详细操作指导，请参考：https://github.com/huawei-clouds/dls-tfserving-client 。**

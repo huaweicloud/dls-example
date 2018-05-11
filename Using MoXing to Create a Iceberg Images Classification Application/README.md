@@ -44,7 +44,7 @@
 
 图3 创建开发环境对话框
 
-<img src="images/创建开发环境对话框.png" width="800px" />
+<img src="images/创建开发环境对话框.png" width="600px" />
  
 
 **步骤 8**  &#160; &#160; 在开发环境列表中，单击所创建开发环境右侧的“打开”，输入密码后，进入Jupyter Notebook文件目录界面。

@@ -44,7 +44,7 @@
 
 图2 TensorBoard作业参数配置
 
-<img src="images/tensorboard作业.png" width="800px" />
+<img src="images/tensorboard作业.png" width="400px" />
 
 图3 TensorBoard可视化界面
 
@@ -61,7 +61,7 @@
 
 图4 预测作业参数配置
  
-<img src="images/预测作业参数配置.png" width="800px" />
+<img src="images/预测作业参数配置.png" width="600px" />
 
 **步骤 2**  &#160; &#160; 参数确认无误后，单击“提交作业”，完成预测作业创建。
 
@@ -70,7 +70,7 @@
 
 图5 预测作业详情页面
 
-<img src="images/预测作业详情.png" width="800px" />
+<img src="images/预测作业详情.png" width="1000px" />
 
 
 ### 4. 发起预测请求

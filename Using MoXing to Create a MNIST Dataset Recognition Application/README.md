@@ -14,8 +14,7 @@
 ### 1. 准备数据
 下载MNIST数据集，解压缩之后上传至OBS桶中。具体操作如下：
 
-**步骤 1**  &#160; &#160; 下载MNIST数据集。下载路径为：http://data.mxnet.io/data/mnist/。数据集文件说明如下：
-	
+**步骤 1**  &#160; &#160; 下载MNIST数据集。下载路径为：http://data.mxnet.io/data/mnist/。 数据集文件说明如下：
 - t10k-images-idx3-ubyte.gz：验证集，共包含10000个样本。
 - t10k-labels-idx1-ubyte.gz：验证集标签，共包含10000个样本的类别标签。
 - train-images-idx3-ubyte.gz：训练集，共包含60000个样本。
@@ -44,7 +43,7 @@
 
 图2 TensorBoard作业参数配置
 
-<img src="images/tensorboard作业.png" width="400px" />
+<img src="images/tensorboard作业.png" width="600px" />
 
 图3 TensorBoard可视化界面
 

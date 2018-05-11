@@ -74,9 +74,9 @@
     git clone https://github.com/huawei-clouds/dls-mxserving-client.git
 
 **步骤 2**  &#160; &#160; 执行如下命令，发起预测请求。
-
-    python dls-mxserving-client/python/image_classification_predict.py 
-    --server_url="http://10.154.74.249:30503/my_mnist/predict" 
-    --file_path="../../mnist_pic/6.jpg"
-
+```
+python dls-mxserving-client/python/image_classification_predict.py    
+--server_url="http://10.154.74.249:30503/my_mnist/predict"   
+--file_path="../../mnist_pic/6.jpg"
+```
 **注意：这里参数server_url包含了服务的IP和端口号，file\_path表示待预测图片的路径。**

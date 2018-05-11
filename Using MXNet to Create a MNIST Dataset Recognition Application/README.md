@@ -38,9 +38,8 @@
 
 图1 训练作业参数配置
  
-<img src="images/分布式作业参数.png" width="1000px" />
+<img src="images/分布式作业参数.PNG" width="800px" />
 
-<img src="images/分布式作业参数.png" width="1000px" />
 
 **步骤 5**  &#160; &#160;  参数确认无误后，单击“提交作业”，完成预测作业创建。
 

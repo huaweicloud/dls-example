@@ -14,7 +14,7 @@
 ### 1. 准备数据
 下载MNIST数据集，解压缩之后上传至OBS桶中。具体操作如下：
 
-**步骤 1**  &#160; &#160; 下载MNIST数据集。下载路径为：http://data.mxnet.io/data/mnist/。数据集文件说明如下：
+**步骤 1**  &#160; &#160; 下载MNIST数据集。下载路径为：http://data.mxnet.io/data/mnist/。 数据集文件说明如下：
 	
 - t10k-images-idx3-ubyte.gz：验证集，共包含10000个样本。
 - t10k-labels-idx1-ubyte.gz：验证集标签，共包含10000个样本的类别标签。
@@ -38,7 +38,7 @@
 
 图1 训练作业参数配置（训练）
  
-![创建训练作业-训练](images/创建训练作业-训练.jpg)
+<img src="images/分布式作业参数.png" width="1000px" />
 
 **步骤 5**  &#160; &#160;  参数确认无误后，单击“提交作业”，完成预测作业创建。
 
@@ -53,7 +53,7 @@
 
 图2 预测作业参数配置
  
-![预测作业](images/预测作业.jpg)
+<img src="images/预测作业参数配置.png" width="1000px" />
 
 **步骤 2**  &#160; &#160; 参数确认无误后，单击“提交作业”，完成预测作业创建。
 
@@ -62,7 +62,7 @@
 
 图3 预测作业详情页面
 
-![预测IPPORT](images/预测IPPORT.jpg)
+<img src="images/预测作业详情页面.png" width="1000px" />
 
 
 ### 4. 发起预测请求
@@ -75,7 +75,7 @@
 **步骤 2**  &#160; &#160; 执行如下命令，发起预测请求。
 
     python dls-mxserving-client/python/image_classification_predict.py 
-    --server_url="http://10.154.74.249:30503/my_mnist/predict" 
+    --server_url="http://10.154.74.249:30503/my_mnist/predict" 
     --file_path="../../mnist_pic/6.jpg"
 
 **注意：这里参数server_url包含了服务的IP和端口号，file\_path表示待预测图片的路径。**

@@ -85,4 +85,6 @@
     --server_url="http://10.154.74.249:30503/my_mnist/predict" 
     --file_path="../../mnist_pic/6.jpg"
 
-**注意：这里参数server\_url包含了服务的IP和端口号，file_path表示待预测图片的路径。**
+**注意：**
+**这里参数server\_url包含了服务的IP和端口号，file_path表示待预测图片的路径。**
+**关于发起预测请求的详细操作指导，请参考：https://github.com/huawei-clouds/dls-tfserving-client 。**

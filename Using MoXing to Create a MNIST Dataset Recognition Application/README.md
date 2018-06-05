@@ -81,10 +81,6 @@
 
 **步骤 2**  &#160; &#160; 执行如下命令，发起预测请求。
 
-    python dls-mxserving-client/python/image_classification_predict.py 
-    --server_url="http://10.154.74.249:30503/my_mnist/predict" 
-    --file_path="../../mnist_pic/6.jpg"
-
     cd dls-tfserving-client/java
 
     mvn clean install

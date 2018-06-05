@@ -93,8 +93,7 @@
     image_classification \
     --host=10.154.74.249 \
     --port=31275 \
-    --dataPath="xx/dls-tfserving-client/data/flowers/flower1.jpg" \
-    --labelsFilePath="xx/dls-tfserving-client/data/flowers/labels.txt" \
+    --dataPath="../../mnist_pic/6.jpg" \
     --modelName="mnist"
 
 **注意：**

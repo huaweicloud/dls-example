@@ -85,6 +85,18 @@
     --server_url="http://10.154.74.249:30503/my_mnist/predict" 
     --file_path="../../mnist_pic/6.jpg"
 
+    cd dls-tfserving-client/java
+
+    mvn clean install
+
+    java -jar target/predict-1.0.0.jar \
+    image_classification \
+    --host=10.154.74.249 \
+    --port=31275 \
+    --dataPath="xx/dls-tfserving-client/data/flowers/flower1.jpg" \
+    --labelsFilePath="xx/dls-tfserving-client/data/flowers/labels.txt" \
+    --modelName="mnist"
+
 **注意：**
 
 **这里参数server\_url包含了服务的IP和端口号，file_path表示待预测图片的路径。**

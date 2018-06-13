@@ -76,9 +76,10 @@
 说明：请保证客户端能够连接互联网。
 如果是windows用户，请先安装git bash，并配置好python, pip环境（推荐使用Anaconda）。linux用户在terminal中按照以下步骤运行（以下步骤仅针对python客户端，JAVA客户端请参考文档底部链接获取详细指导）。
 完成模型部署后，将进行预测服务的请求访问，操作步骤如下：
-步骤 1     执行下面命令，下载客户端代码。
+
+**步骤 1**    执行下面命令，下载客户端代码。
 git clone https://github.com/huawei-clouds/dls-tfserving-client.git
-步骤 2     安装依赖及配置python环境变量。
+**步骤 2**    安装依赖及配置python环境变量。
      1.安装 tensorflow
         pip install tensorflow
      2.安装其它依赖包
@@ -86,15 +87,15 @@ git clone https://github.com/huawei-clouds/dls-tfserving-client.git
      3.把下列路径加入到环境变量 PYTHONPATH 中
         export PYTHONPATH=PYTHONPATH:<i>xx</i>/dls-tfserving-client/python/predict_client
 注意: xx是指"dls-tfserving-client" 所在的目录。
-步骤3  在xx/dls-tfserving-client/python/下新建python代码文件，命名为：predict_mnist.py，具体代码请访问https://github.com/huaweicloud/dls-example/blob/master/Using%20MoXing%20to%20Create%20a%20MNIST%20Dataset%20Recognition%20Application/codes/predict_mnist.py
-步骤4  根据实际情况修改predict_mnist.py文件中的部分代码，如下所示。
+**步骤 3**  在xx/dls-tfserving-client/python/下新建python代码文件，命名为：predict_mnist.py，具体代码请访问https://github.com/huaweicloud/dls-example/blob/master/Using%20MoXing%20to%20Create%20a%20MNIST%20Dataset%20Recognition%20Application/codes/predict_mnist.py
+**步骤 4**  根据实际情况修改predict_mnist.py文件中的部分代码，如下所示。
 IMAGE_PATH = '/export1/zzy/mnist/3.png'    #根据实际待预测图片的保存地址修改参数
 HOST = '10.155.167.202'  #根据实际服务IP地址修改
 PORT = 31670             #根据实际服务端口号修改
 MODEL_NAME = 'mnist'     #根据实际服务运行参数model_name修改
 SIGNATURE_NAME = 'predict_object'
 MAX_RESPONSE_TIME = 3000
-步骤5 运行代码
+**步骤 5**  运行代码
 python predict_mnist.py
 **注意：**
 

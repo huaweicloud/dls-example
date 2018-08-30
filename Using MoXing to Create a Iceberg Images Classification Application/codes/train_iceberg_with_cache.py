@@ -19,6 +19,22 @@ tf.flags.DEFINE_string('data_url', 's3://zxy/model/zzy', 'Dir of dataset')
 tf.flags.DEFINE_string('log_dir', 's3://zxy/model/zzy/log', 'Dir of log') 
 tf.flags.DEFINE_boolean('is_training', True, 'True for train. False for eval and predict.') 
 flags = tf.flags.FLAGS 
+
+import atexit
+import logging
+_data_url = flags.data_url
+_log_dir = flags.log_dir
+mox.file.make_dirs('/cache/data_url')
+mox.file.make_dirs('/cache/log_dir')
+mox.file.copy_parallel(_data_url, '/cache/data_url')
+mox.file.copy_parallel(_log_dir, '/cache/log_dir')
+flags.data_url = '/cache/data_url'
+flags.log_dir = '/cache/log_dir'
+atexit.register(lambda: mox.file.copy_parallel('/cache/log_dir', _log_dir))
+logger = logging.getLogger()
+while logger.handlers:
+  logger.handlers.pop()
+
 num_gpus = mox.get_flag('num_gpus') 
 num_workers = len(mox.get_flag('worker_hosts').split(',')) 
 steps_per_epoch = int(math.ceil(float(NUM_SAMPLES_TRAIN) / (flags.batch_size * num_gpus * num_workers))) 
@@ -30,7 +46,7 @@ def input_fn(run_mode, **kwargs):
     shuffle = True 
     file_pattern = 'iceberg-train-*.tfrecord' 
   else: 
-    num_epochs = 1 
+    num_epochs = None 
     shuffle = False 
     if run_mode == mox.ModeKeys.EVAL: 
       num_samples = NUM_SAMPLES_EVAL 

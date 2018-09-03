@@ -24,6 +24,8 @@ import atexit
 import logging
 _data_url = flags.data_url
 _log_dir = flags.log_dir
+if not mox.file.is_directory(_log_dir):
+  mox.file.make_dirs(_log_dir)
 mox.file.make_dirs('/cache/data_url')
 mox.file.make_dirs('/cache/log_dir')
 mox.file.copy_parallel(_data_url, '/cache/data_url')

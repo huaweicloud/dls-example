@@ -1,6 +1,8 @@
 import mxnet as mx
 import argparse
 import logging
+
+# load data
 def get_mnist_iter(args):
     train_image = args.data_url + 'train-images-idx3-ubyte'
     train_lable = args.data_url + 'train-labels-idx1-ubyte'
@@ -14,6 +16,7 @@ def get_mnist_iter(args):
                             seed=10)
     return train
 
+# create network
 def get_symbol(num_classes=10, **kwargs):
     data = mx.symbol.Variable('data')
     data = mx.sym.Flatten(data=data)
@@ -26,21 +29,28 @@ def get_symbol(num_classes=10, **kwargs):
     return mlp
 
 def fit(args):
-    # kvstore
+    # create kvstore
     kv = mx.kvstore.create(args.kv_store)
     # logging
     head = '%(asctime)-15s Node[' + str(kv.rank) + '] %(message)s'
     logging.basicConfig(level=logging.DEBUG, format=head)
     logging.info('start with arguments %s', args)
+    # get train data
     train = get_mnist_iter(args)
+    # create checkpoint
     checkpoint = mx.callback.do_checkpoint(args.model_prefix if kv.rank == 0 else "%s-%d" % (
         args.model_prefix, kv.rank))
+    # create callbacks after end of every batch
     batch_end_callbacks = [mx.callback.Speedometer(args.batch_size, args.disp_batches)]
+    # get the created network 
     network = get_symbol(num_classes=args.num_classes)
+    # create context
     devs = mx.cpu() if args.num_gpus == 0 else [mx.gpu(int(i)) for i in range(args.num_gpus)]
     # create model
     model = mx.mod.Module(context=devs, symbol=network)
+    # create an initialization method
     initializer = mx.init.Xavier(rnd_type='gaussian', factor_type="in", magnitude=2)
+    # create params of optimizer
     optimizer_params = {'learning_rate': args.lr, 'wd' : 0.0001}
     # run
     model.fit(train,

@@ -10,6 +10,7 @@ flags = tf.flags.FLAGS
 mnist = input_data.read_data_sets(flags.data_url, one_hot=True)
 
 
+# define the input dataset, return image and label
 def input_fn(run_mode, **kwargs):
   def gen():
     while True:
@@ -20,6 +21,7 @@ def input_fn(run_mode, **kwargs):
   return ds.make_one_shot_iterator().get_next()
 
 
+# define the model for training or evaling.
 def model_fn(inputs, run_mode, **kwargs):
   x, y_ = inputs
   W = tf.get_variable(name='W', initializer=tf.zeros([784, 10]))

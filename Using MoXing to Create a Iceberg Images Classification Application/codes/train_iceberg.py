@@ -1,6 +1,7 @@
 from __future__ import absolute_import 
 from __future__ import division 
 from __future__ import print_function 
+
 import os 
 os.environ.pop('http_proxy', None) 
 import math 
@@ -10,25 +11,34 @@ import tensorflow as tf
 import moxing.tensorflow as mox 
 from tensorflow.python.keras.layers import Conv2D, MaxPooling2D, Dense 
 from tensorflow.python.keras.layers import Dropout, Flatten, Activation, Concatenate 
+
 slim = tf.contrib.slim 
+
 NUM_SAMPLES_TRAIN = 1176 
 NUM_SAMPLES_EVAL = 295 
 NUM_SAMPLES_TEST = 8424 
+
 tf.flags.DEFINE_integer('batch_size', 16, 'Mini-batch size') 
 tf.flags.DEFINE_string('data_url', 's3://zxy/model/zzy', 'Dir of dataset') 
 tf.flags.DEFINE_string('log_dir', 's3://zxy/model/zzy/log', 'Dir of log') 
 tf.flags.DEFINE_boolean('is_training', True, 'True for train. False for eval and predict.') 
+
 flags = tf.flags.FLAGS 
 num_gpus = mox.get_flag('num_gpus') 
+# if using distributed, the number of workers is related to the number of machines.
 num_workers = len(mox.get_flag('worker_hosts').split(',')) 
 steps_per_epoch = int(math.ceil(float(NUM_SAMPLES_TRAIN) / (flags.batch_size * num_gpus * num_workers))) 
 submission = pd.DataFrame(columns=['id', 'is_iceberg']) 
+
+
 def input_fn(run_mode, **kwargs): 
+  # Train
   if run_mode == mox.ModeKeys.TRAIN: 
     num_samples = NUM_SAMPLES_TRAIN 
     num_epochs = None 
     shuffle = True 
     file_pattern = 'iceberg-train-*.tfrecord' 
+  # Eval or Test
   else: 
     num_epochs = 1 
     shuffle = False 
@@ -54,6 +64,9 @@ def input_fn(run_mode, **kwargs):
   else: 
     keys_to_features['label'] = tf.FixedLenFeature([1], tf.int64, default_value=None) 
     items_to_handlers['label'] = slim.tfexample_decoder.Tensor('label', shape=[]) 
+    
+  # returns an instance of 'DatasetDataProvider' 
+  # defined in 'tensorflow/contrib/slim/python/data/dataset_data_provider.py'
   dataset = mox.get_tfrecord(dataset_dir=flags.data_url, 
                              file_pattern=file_pattern, 
                              num_samples=num_samples, 
@@ -71,6 +84,7 @@ def input_fn(run_mode, **kwargs):
   else: 
     band_1, band_2, id_or_label, angle = dataset.get(['band_1', 'band_2', 'label', 'angle']) 
   band_3 = band_1 + band_2 
+  
   # Rescale the input image to [0, 1] 
   def rescale(*args): 
     ret_images = [] 
@@ -81,14 +95,18 @@ def input_fn(run_mode, **kwargs):
       image = (image - image_min) / (image_max - image_min) 
       ret_images.append(image) 
     return ret_images 
+  
   band_1, band_2, band_3 = rescale(band_1, band_2, band_3) 
   image = tf.stack([band_1, band_2, band_3], axis=2) 
-  # Data augementation 
+  
+  # Data augementation(Only using in training data) 
   if run_mode == mox.ModeKeys.TRAIN: 
     image = tf.image.random_flip_left_right(image) 
     image = tf.image.random_flip_up_down(image) 
     image = tf.image.rot90(image, k=tf.random_uniform(shape=(), maxval=3, minval=0, dtype=tf.int32)) 
   return image, id_or_label, angle 
+
+# Classification Model
 def model_v1(images, angles, run_mode): 
   is_training = (run_mode == mox.ModeKeys.TRAIN) 
   # Conv Layer 1 
@@ -121,6 +139,8 @@ def model_v1(images, angles, run_mode):
   # Sigmoid Layer 
   logits = Dense(2)(x) 
   return logits 
+
+
 def model_fn(inputs, run_mode, **kwargs): 
   # In train or eval, id_or_labels represents labels. In predict, id_or_labels represents id. 
   images, id_or_labels, angles = inputs 
@@ -140,6 +160,8 @@ def model_fn(inputs, run_mode, **kwargs):
       label_smoothing=0.0, weights=1.0) 
     model_spec = mox.ModelSpec(loss=loss, log_info={'loss': loss}) 
   return model_spec 
+
+
 def output_fn(outputs): 
   global submission 
   for output in outputs: 
@@ -150,7 +172,11 @@ def output_fn(outputs):
       is_iceberg = logits[1] 
       df = pd.DataFrame([[id, is_iceberg]], columns=['id', 'is_iceberg']) 
       submission = submission.append(df) 
+      
+      
 if __name__ == '__main__': 
+  # In training mode, using max_number_of_steps to control the epochs
+  # Else, only run one epoch in eval and test mode.
   if flags.is_training: 
     mox.run(input_fn=input_fn, 
             model_fn=model_fn, 

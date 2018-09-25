@@ -195,7 +195,7 @@ if __name__ == '__main__':
             batch_size=24, 
             max_number_of_steps=int(NUM_SAMPLES_TEST / 24), 
             log_every_n_steps=50, 
-            output_every_n_steps=int(NUM_SAMPLES_TEST / 24), 
+            output_every_n_steps=1, 
             checkpoint_path=flags.log_dir) 
     # Write results to file. tf.gfile allow writing file to EBS/s3 
     submission_file = os.path.join(flags.log_dir, 'submission.csv') 

@@ -9,11 +9,11 @@ def get_mnist_iter(args):
     try:
         import moxing.mxnet as mox
     except:
-        os.path.exists('s3://obs-lpf/data/mnist/train-images-idx3-ubyte')
-        os.path.exists('s3://obs-lpf/data/mnist/train-labels-idx1-ubyte')
+        os.path.exists(train_image)
+        os.path.exists(train_label)
     else:
-        mox.file.exists('s3://obs-lpf/data/mnist/train-images-idx3-ubyte')
-        mox.file.exists('s3://obs-lpf/data/mnist/train-labels-idx1-ubyte')
+        mox.file.exists(train_image)
+        mox.file.exists(train_label)
 
     train = mx.io.MNISTIter(image=train_image,
                             label=train_lable,

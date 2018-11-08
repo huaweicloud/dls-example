@@ -4,8 +4,10 @@ import logging
 
 # load data
 def get_mnist_iter(args):
-    train_image = args.data_url + 'train-images-idx3-ubyte'
-    train_lable = args.data_url + 'train-labels-idx1-ubyte'
+    train_image = os.path.join(args.data_url, 'train-images-idx3-ubyte')
+    train_label = os.path.join(args.data_url, 'train-labels-idx1-ubyte')
+    assert mox.file.exists(train_image), 'train-images-idx3-ubyte文件不存在，请检查数据路径和文件是否已解压'
+    assert mox.file.exists(train_label), 'train-images-idx1-ubyte文件不存在，请检查数据路径和文件是否已解压'
     train = mx.io.MNISTIter(image=train_image,
                             label=train_lable,
                             data_shape=(1, 28, 28),

@@ -1,6 +1,7 @@
 import mxnet as mx
 import argparse
 import logging
+import os
 
 # load data
 def get_mnist_iter(args):

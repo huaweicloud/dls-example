@@ -19,10 +19,6 @@ for filename in filenames:
         logging.error('MNIST DATA ERROR')
         os._exit(-1)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b0983746609b842fe5cd4696adb46c1660e595cb
 def main(*args):
   mnist = input_data.read_data_sets(flags.data_url, one_hot=True)
 

@@ -1,11 +1,23 @@
 from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
 import moxing.tensorflow as mox
+import logging
+import os
+from tensorflow.python.platform import gfile
 
 tf.flags.DEFINE_string('data_url', None, 'Dir of dataset')
 tf.flags.DEFINE_string('train_url', None, 'Train Url')
 
 flags = tf.flags.FLAGS
+
+work_directory = flags.data_url
+filenames = ['train-images-idx3-ubyte.gz','train-labels-idx1-ubyte.gz','t10k-images-idx3-ubyte.gz','t10k-labels-idx1-ubyte.gz']
+
+for filename in filenames:
+    filepath = os.path.join(work_directory, filename)
+    if not gfile.Exists(filepath):
+        logging.error('MNIST DATA ERROR')
+        os._exit(-1)
 
 def main(*args):
   mnist = input_data.read_data_sets(flags.data_url, one_hot=True)

@@ -60,7 +60,7 @@
 
 图4 预测作业参数配置
  
-<img src="images/预测作业参数配置.png" width="600px" />
+<img src="images/预测作业参数配置.PNG" width="600px" />
 
 **步骤 2**  &#160; &#160; 参数确认无误后，单击“提交作业”，完成预测作业创建。
 
@@ -69,7 +69,7 @@
 
 图5 服务地址获取
 
-<img src="images/服务地址获取.png" width="1000px" />
+<img src="images/服务地址获取.PNG" width="1000px" />
 
 
 ### 4. 发起预测请求
@@ -78,11 +78,14 @@
 **步骤 1** 下载Postman软件并安装，或直接在chrome浏览器添加postman扩展程序（也可使用其它支持发送post请求的软件）。
 
 **步骤 2** 打开Postman，获取Token(关于如何获取token，请参考<a href ="https://support.huaweicloud.com/api-dls/dls_03_0005.html">“获取请求认证”</a>）。
+
 图6 token获取
+
 <img src="images/token获取.png" width="1000px" />
 
 **步骤 3** 在Postman界面填写参数
 1）选择POST任务，将预测作业的服务地址（以“https://”开头的URL地址）复制到 POST后面的方框。Headers栏的Key值填写为“X-Auth-Token”，Value值为您获取到的Token。
+
 图7 参数填写
 
 <img src="images/参数填写.png" width="1000px" />

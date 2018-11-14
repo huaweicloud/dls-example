@@ -1,6 +1,6 @@
 # 使用MXNet实现手写数字图像识别应用
 
-&#160; &#160; &#160; &#160; 本文介绍在华为云深度学习服务平台如何使用MXNet实现MNIST数据集的手写数字图像识别应用。操作的流程分为2部分，分别是：
+本文介绍在华为云深度学习服务平台如何使用MXNet实现MNIST数据集的手写数字图像识别应用。操作的流程分为2部分，分别是：
 
 - **准备数据**：下载文本数据集，解压后上传至OBS桶中。
 
@@ -9,11 +9,11 @@
 
 
 ### 1. 准备数据
-&#160; &#160; &#160; &#160; 下载MNIST数据集，解压缩之后上传至OBS桶中。具体操作如下：
+下载MNIST数据集，解压缩之后上传至OBS桶中。具体操作如下：
 
 **步骤 1**  &#160; &#160; 下载MNIST数据集，数据集文件说明如下：
 	
-- t10k-images-idx3-ubyte.gz：验证集，共包含10000个样本。<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/mnist_example/mnist_data/t10k-images-idx3-ubyte.gz">“下载数据”</a>
+- t10k-images-idx3-ubyte.gz：验证集，共包含10000个样本。<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/mnist_example/mnist_data/t10k-images-idx3-ubyte.gz">下载数据</a>
 - t10k-labels-idx1-ubyte.gz：验证集标签，共包含10000个样本的类别标签。
 - train-images-idx3-ubyte.gz：训练集，共包含60000个样本。
 - train-labels-idx1-ubyte.gz：训练集标签，共包含60000个样本的类别标签。

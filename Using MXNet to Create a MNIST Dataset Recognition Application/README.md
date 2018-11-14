@@ -53,4 +53,41 @@
 
 **<font color=red>训练作业已完成，删除训练作业，以免一直占用资源。</font>**
 
+### 3. 部署模型
 
+模型训练完成后，可以创建预测作业，将模型部署为在线预测服务，操作步骤如下：
+
+**步骤 1**  &#160; &#160; 在“预测作业管理”界面，单击左上角的“创建预测作业”，参考图2填写参数。其中，模型名称参数model_name，此处可随意指定。
+
+图2 预测作业参数配置
+ 
+<img src="images/预测作业参数配置.png" width="800px" />
+
+**步骤 2**  &#160; &#160; 参数确认无误后，单击“提交作业”，完成预测作业创建。
+
+
+当预测作业状态为“运行中”时，表示创建成功。单击预测作业名称，可看到如下界面信息如图3所示。在发起预测请求时，你需要查看IP地址、端口号和模型名称3个参数值。
+
+图3 预测作业详情页面
+
+<img src="images/预测作业详情页面.png" width="1000px" />
+
+
+### 4. 发起预测请求
+完成模型部署后，将进行预测服务的请求访问，操作步骤如下：
+
+**步骤 1**  &#160; &#160; 执行下面命令，下载客户端代码。
+
+    git clone https://github.com/huawei-clouds/dls-mxserving-client.git
+
+**步骤 2**  &#160; &#160; 执行如下命令，发起预测请求。
+```
+python dls-mxserving-client/python/image_classification_predict.py    
+--server_url="http://10.154.74.249:30503/my_mnist/predict"   
+--file_path="../../mnist_pic/6.jpg"
+```
+**注意：**
+
+**这里参数server_url包含了服务的IP和端口号，file\_path表示待预测图片的路径。**
+
+**关于发起预测请求的详细操作指导，请参考：https://github.com/huawei-clouds/dls-mxserving-client 。**

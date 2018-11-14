@@ -123,7 +123,7 @@
 
 图6 训练作业运行成功
 
-<img src="images/训练作业运行成功.png" width="800px" />
+<img src="images/训练作业运行成功.PNG" width="800px" />
 
 **步骤 6**&#160; &#160; 训练作业的运行过程中或者运行结束后进入“可视化管理”界面点击“创建TensorBoard作业”即可查看模型训练的结果，        当训练作业运行成功后，可在模型保存路径下查看新的模型文件。
 
@@ -134,7 +134,7 @@
 
 图8 TensorBoard界面
 
-<img src="images/TensorBoard界面.PNG" width="800px" />
+<img src="images/TensorBoard界面.png" width="800px" />
 
 ### 3. 部署模型
 
@@ -179,10 +179,12 @@
 
 图13 预测结果显示
 
-<img src="images/预测结果显示.PNG" width="800px" />
+<img src="images/预测结果显示.png" width="800px" />
 
 注： "logtis"值为长度为5的list列表，分别与flowers的五个类别对应，值越大说明此类别的得分越高，属于此类的可能性越大。位置与类别的对应关系可在训练作业的打印日志中看到，如下图。
 
 图14 类别列表
 
 <img src="images/类别列表.PNG" width="800px" />
+
+

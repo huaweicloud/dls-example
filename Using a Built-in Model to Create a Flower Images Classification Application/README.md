@@ -38,7 +38,7 @@
 
 图1 开发环境的创建
 
-<img src="images/创建开发环境.PNG" width="800px" />
+<img src="images/创建开发环境.PNG" width="1000px" />
 
 
 图2 开发环境的参数配置

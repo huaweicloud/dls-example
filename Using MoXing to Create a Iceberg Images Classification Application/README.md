@@ -33,7 +33,7 @@
 
 图2 开发环境创建成功
 
-<img src="images/开发环境创建成功.jpg" width="600px" />
+<img src="images/开发环境创建成功.jpg" width="1000px" />
 
 **步骤 6**  &#160; &#160; 单击右上角的“New”，选择“Python 2” ，进入代码开发界面。在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format_conversion.py</a>（请根据数据集实际存储位置，修改脚本代码，原代码如图3，修改后如图4）。
 

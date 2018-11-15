@@ -9,7 +9,7 @@
 ### 1. 准备数据
 下载flowers数据集并上传至华为云对象存储服务器（OBS）桶中，操作步骤如下：
 
-**步骤 1** &#160; &#160; 下载并解压缩数据集压缩包“flower_photos.tgz”，flowers数据集的下载路径为：[http://download.tensorflow.org/example_images/flower_photos.tgz](http://download.tensorflow.org/example_images/flower_photos.tgz)
+**步骤 1** &#160; &#160; 下载并解压缩数据集压缩包<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/flower_class/data/flower_photos.tgz">flower_photos.tgz</a>。
 
 **步骤 2**&#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将数据集上传至华为云OBS桶中（假设OBS桶路径为：“s3://obs-dls-flowers-demo/data/flowers_photos”）。
 
@@ -38,7 +38,7 @@
 
 图1 开发环境的创建
 
-<img src="images/创建开发环境.PNG" width="800px" />
+<img src="images/创建开发环境.PNG" width="1000px" />
 
 
 图2 开发环境的参数配置
@@ -113,7 +113,7 @@
 
 **步骤 3**&#160; &#160; 在“预置模型库”界面，单击“ResNet\_v1\_50”所在行右侧的“创建训练作业”，进入“创建训练作业”界面。
 
-**步骤 4**&#160; &#160; 参考下图完成作业参数配置。其中，“代码目录”和“启动文件”无需用户填写，"训练数据集"请选择训练集和验证集所在的父目录（在本案例中，即s3://automation/data），“train_url”为模型保存路径。
+**步骤 4**&#160; &#160; 参考下图完成作业参数配置。其中，“代码目录”和“启动文件”无需用户填写，"训练数据集"请选择训练集和验证集所在的父目录（在本案例中，即s3://obs-dls-flowers-demo/data/flowers_raw/），“train_url”为模型保存路径。
 
 图5 训练作业的参数配置图
 
@@ -135,6 +135,12 @@
 图8 TensorBoard界面
 
 <img src="images/TensorBoard界面.png" width="800px" />
+
+**<font color=red>注意：</font>**
+
+**<font color=red>训练时间超过一定时间，请及时手动停止，释放资源。否则会导致欠费，尤其对于使用GPU训练的模型项目。</font>**
+
+**<font color=red>训练作业已完成，删除训练作业，以免一直占用资源。</font>**
 
 ### 3. 部署模型
 
@@ -159,7 +165,7 @@
 
 图10 部署预测服务
 
-<img src="images/部署预测服务.PNG" width="800px" />
+<img src="images/部署预测服务.PNG" width="1000px" />
 
 **步骤 1**  &#160; &#160; 下载Postman软件并安装，或直接在chrome浏览器添加postman扩展程序（也可使用其它支持发送post请求的软件）。
 
@@ -167,7 +173,7 @@
 
 图11 获取Token
 
-<img src="images/获取Token.png" width="800px" />
+<img src="images/获取Token.png" width="1000px" />
 
 **步骤 3**  &#160; &#160; 选择POST任务，将预测作业的服务地址（以“https://”开头的URL地址）复制到 POST后面的方框。Headers栏的Key值填写为“X-Auth-Token”，Value值为您获取到的Token，如下图所示。
 
@@ -187,4 +193,6 @@
 
 <img src="images/类别列表.PNG" width="800px" />
 
+**<font color=red>注意：</font>**
 
+**<font color=red>预测请求结束后，后续不使用预测服务的情况下，删除预测作业，以免一直占用资源。</font>**

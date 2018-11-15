@@ -39,7 +39,7 @@
 
 图3 原data_format_conversion代码
 
-<img src="images/原data_format_conversion部分代码.jpg" width="600px" />
+<img src="images/原data_format_conversion部分代码.jpg" width="800px" />
 
 图4 更改后的data_format_conversion代码
 

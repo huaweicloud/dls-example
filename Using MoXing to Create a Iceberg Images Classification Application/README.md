@@ -41,7 +41,7 @@
 
 <img src="images/原data_format_conversion部分代码.PNG" width="600px" />
 
-图3 更改后的data_format_conversion代码
+图4 更改后的data_format_conversion代码
 
 <img src="images/更改后data_format_conversion部分代码.PNG" width="600px" />
 
@@ -55,16 +55,27 @@
 ### 2. 训练模型
 将模型训练脚本上传至OBS桶中（您也可以在DLS的开发环境中编写模型训练脚本，并转成py文件），然后创建训练作业进行模型训练，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将模型训练脚本文件<a href ="codes/train_iceberg.py">train\_iceberg.py</a>上传至华为云OBS桶 （假设OBS桶路径为：s3://yang/code/）。
+**步骤 1**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将模型训练脚本文件<a href ="codes/train_iceberg.py">train\_iceberg.py</a>上传至华为云OBS桶 （假设OBS桶路径为：s3://dls-obs/iceberg/iceberg_code/）。
 
-**步骤 2**  &#160; &#160; 返回“深度学习服务管理”控制台，在“训练作业管理”界面。 单击左上角的“创建训练作业”，参考图4填写参数。
+**步骤 2**  &#160; &#160; 返回“深度学习服务管理”控制台，在“训练作业管理”界面。 单击左上角的“创建训练作业”，参考图5填写参数。（其中train_url是训练输出文件路径，需要用户自定义创建路径）
 
-图4 训练作业参数
+图5 训练作业参数
 
-<img src="images/训练作业参数配置.png" width="1000px" />
+<img src="images/训练作业参数.PNG" width="1000px" />
 
 
-**步骤 3**  &#160; &#160; 单击“提交作业”，完成训练作业创建。
+**步骤 3**  &#160; &#160; 单击“提交作业”，完成训练作业创建， 训练作业完成如图6.
+
+图6 训练作业完成
+
+<img src="images/训练作业完成.PNG" width="1000px" />
+
+
+**<font color=red>注意：</font>**
+
+**<font color=red>训练时间超过一定时间，请及时手动停止，释放资源。否则会导致欠费，尤其对于使用GPU训练的模型项目。</font>**
+
+**<font color=red>训练作业已完成，删除训练作业，以免一直占用资源。</font>**
 
 ### 3. 预测结果
 待训练作业运行完成后，在“s3://yang/log”目录下生成模型文件（如：model.ckpt-5600）。由于我们只需要进行一次预测，因此不需要部署在线预测服务。相关的预测操作已经在“train_iceberg.py”文件写好，预测结果将输出到“submission.csv”文件。我们使用训练作业进行预测，操作步骤如下：

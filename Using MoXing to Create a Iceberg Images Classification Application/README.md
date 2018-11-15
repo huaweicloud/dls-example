@@ -18,22 +18,35 @@
 - inc_angle：雷达图拍摄角度，单位是角度。
 - is_iceberg： 标注，冰山为1，船为0。
 
-**步骤 5**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将数据集train.json和test.json上传至华为云OBS桶 （假设OBS桶路径为：s3://automation/data/）。
+**步骤 2**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将数据集train.json和test.json上传至华为云OBS桶 （假设OBS桶路径为：s3://dls-obs/iceberg/iceberg_data/）。
 
-**步骤 6**  &#160; &#160; 参考<a href ="https://support.huaweicloud.com/usermanual-dls/dls_01_0006.html">“访问深度学习服务”</a>章节内容，登录“深度学习服务”管理控制台。
+**步骤 3**  &#160; &#160; 参考<a href ="https://support.huaweicloud.com/usermanual-dls/dls_01_0006.html">“访问深度学习服务”</a>章节内容，登录“深度学习服务”管理控制台。
 
-**步骤 7**  &#160; &#160; 在“开发环境管理”界面，单击“创建开发环境”，在弹出框中填写对应参数，如图3。单击“确定”，完成创建操作。
+**步骤 4**  &#160; &#160; 在“开发环境管理”界面，单击“创建开发环境”，在弹出框中填写对应参数，如图1。单击“确定”，完成创建操作。
 
-图3 创建开发环境对话框
+图1 创建开发环境
 
-<img src="images/创建开发环境对话框.png" width="600px" />
+<img src="images/创建开发环境.jpg" width="600px" />
  
 
-**步骤 8**  &#160; &#160; 在开发环境列表中，单击所创建开发环境右侧的“打开”，输入密码后，进入Jupyter Notebook文件目录界面。
+**步骤 5**  &#160; &#160; 在开发环境列表中，单击所创建开发环境右侧的“打开”，如图2，进入Jupyter Notebook文件目录界面。
 
-**步骤 9**  &#160; &#160; 单击右上角的“New”，选择“Python 2” ，进入代码开发界面。在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format_conversion.py</a>（请根据数据集实际存储位置，修改脚本代码）。
+图2 开发环境创建成功
 
-**步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码。代码运行成功后，将在“s3://automation/data/”目录下生成如下三个文件：
+<img src="images/开发环境创建成功.jpg" width="600px" />
+
+**步骤 6**  &#160; &#160; 单击右上角的“New”，选择“Python 2” ，进入代码开发界面。在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format_conversion.py</a>（请根据数据集实际存储位置，修改脚本代码，原代码如图3，修改后如图4）。
+
+图3 原data_format_conversion代码
+
+<img src="images/原data_format_conversion代码.jpg" width="600px" />
+
+图3 更改后的data_format_conversion代码
+
+<img src="images/更改后的data_format_conversion代码.jpg" width="600px" />
+
+
+**步骤 7**  &#160; &#160; 单击Cell上方的 ，运行代码。代码运行成功后，将在“s3://dls-obs/iceberg/iceberg_data/”目录下生成如下三个文件：
 
 - iceberg-train-1176.tfrecord：训练数据集
 - iceberg-eval-295.tfrecord：验证数据集

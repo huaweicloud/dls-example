@@ -107,6 +107,6 @@
 
 图9 预测结果
 
-<img src="images/预测结果.PNG" width="1000px" />
+<img src="images/预测结果.PNG" width="600px" />
 
 

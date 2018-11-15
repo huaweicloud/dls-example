@@ -165,7 +165,7 @@
 
 图10 部署预测服务
 
-<img src="images/部署预测服务.PNG" width="800px" />
+<img src="images/部署预测服务.PNG" width="1000px" />
 
 **步骤 1**  &#160; &#160; 下载Postman软件并安装，或直接在chrome浏览器添加postman扩展程序（也可使用其它支持发送post请求的软件）。
 
@@ -173,7 +173,7 @@
 
 图11 获取Token
 
-<img src="images/获取Token.png" width="800px" />
+<img src="images/获取Token.png" width="1000px" />
 
 **步骤 3**  &#160; &#160; 选择POST任务，将预测作业的服务地址（以“https://”开头的URL地址）复制到 POST后面的方框。Headers栏的Key值填写为“X-Auth-Token”，Value值为您获取到的Token，如下图所示。
 

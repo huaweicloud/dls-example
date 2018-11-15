@@ -43,7 +43,7 @@
 
 图3 更改后的data_format_conversion代码
 
-<img src="images/更改后的data_format_conversion部分代码.PNG" width="600px" />
+<img src="images/更改后data_format_conversion部分代码.PNG" width="600px" />
 
 
 **步骤 7**  &#160; &#160; 单击Cell上方的 ，运行代码。代码运行成功后，将在“s3://dls-obs/iceberg/iceberg_data/”目录下生成如下三个文件：

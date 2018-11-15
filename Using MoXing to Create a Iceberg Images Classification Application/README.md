@@ -10,7 +10,7 @@
 下载冰山图像分类数据集，并上传至华为云OBS桶中，然后通过华为云深度学习服务在线IDE将数据集格式转换成TFRecord格式，操作步骤如下：
 
 
-**步骤 1**  &#160; &#160; 下载数据集<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/mnist_example/mnist_data/t10k-images-idx3-ubyte.gz">train.json</a>和<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/mnist_example/mnist_data/t10k-images-idx3-ubyte.gz">test.json</a>，解压缩后得到train.json和test.json（该格式可以通过pandas.read_json进行读取）。
+**步骤 1**  &#160; &#160; 下载数据集<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/iceberg/iceberg_data/train.rar">train.json</a>和<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/iceberg/iceberg_data/test.rar">test.json</a>，解压缩后得到train.json和test.json（该格式可以通过pandas.read_json进行读取）。
 
 其中，训练集train.json包含4类数据：band\_1、band\_2、inc\_angle和is_iceberg（测试集），分别是：
 

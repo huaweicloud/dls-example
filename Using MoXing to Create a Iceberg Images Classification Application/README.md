@@ -89,15 +89,21 @@
 
 **步骤 2**  &#160; &#160; 单击“提交作业”，完成训练作业创建。
 
-**步骤 3**  &#160; &#160; 训练作业执行完成后，在“训练作业管理”界面，单击iceberg_eval作业名称，进入作业的详情界面。在“训练日志”中，可以查看到在eval数据集上的loss值为0.271，如图8。在“s3://dls-obs/iceberg/iceberg_log/”目录下，能看到用于保存预测结果的“submission.csv”文件。
+**步骤 3**  &#160; &#160; 训练作业执行完成后，在“训练作业管理”界面，单击iceberg_eval作业名称，进入作业的详情界面。在“训练日志”中，可以查看到在eval数据集上的loss值为0.271，如图8。
 
 图8 训练作业日志
 
 <img src="images/训练作业日志.PNG" width="1000px" />
+
+**<font color=red>注意：</font>**
+
+**<font color=red>训练时间超过一定时间，请及时手动停止，释放资源。否则会导致欠费，尤其对于使用GPU训练的模型项目。</font>**
+
+**<font color=red>训练作业已完成，删除训练作业，以免一直占用资源。</font>**
  
 ### 4. 查看结果
 
-“submission.csv”文件中的预测结果如图9。
+在“s3://dls-obs/iceberg/iceberg_log/”目录下，能看到用于保存预测结果的“submission.csv”文件。“submission.csv”文件中的预测结果如图9。
 
 图9 预测结果
 

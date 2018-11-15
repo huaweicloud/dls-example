@@ -26,24 +26,24 @@
 
 图1 创建开发环境
 
-<img src="images/创建开发环境.jpg" width="600px" />
+<img src="images/创建开发环境.PNG" width="600px" />
  
 
 **步骤 5**  &#160; &#160; 在开发环境列表中，单击所创建开发环境右侧的“打开”，如图2，进入Jupyter Notebook文件目录界面。
 
 图2 开发环境创建成功
 
-<img src="images/开发环境创建成功.jpg" width="600px" />
+<img src="images/开发环境创建成功.PNG" width="600px" />
 
 **步骤 6**  &#160; &#160; 单击右上角的“New”，选择“Python 2” ，进入代码开发界面。在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format_conversion.py</a>（请根据数据集实际存储位置，修改脚本代码，原代码如图3，修改后如图4）。
 
 图3 原data_format_conversion代码
 
-<img src="images/原data_format_conversion代码.jpg" width="600px" />
+<img src="images/原data_format_conversion部分代码.PNG" width="600px" />
 
 图3 更改后的data_format_conversion代码
 
-<img src="images/更改后的data_format_conversion代码.jpg" width="600px" />
+<img src="images/更改后的data_format_conversion部分代码.PNG" width="600px" />
 
 
 **步骤 7**  &#160; &#160; 单击Cell上方的 ，运行代码。代码运行成功后，将在“s3://dls-obs/iceberg/iceberg_data/”目录下生成如下三个文件：

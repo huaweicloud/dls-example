@@ -5,30 +5,12 @@
 1.	**准备数据**：下载数据集并上传至华为云OBS桶中，编写代码将数据集格式转换成TFRecord。
 3.	**训练模型**：使用MoXing API编写用实现冰山图像分类的网络模型，新建训练作业进行模型训练。
 4.	**预测结果**：再次新建训练作业，对test数据集进行预测，并将结果保存到csv文件。
-5.	**查看结果**：将预测结果的csv文件提交到Kaggle官网后获取分类结果。
+5.	**查看结果**：查看csv文件的预测结果。
 ### 1. 准备数据
-首先登陆Kaggle官网，下载冰山图像分类数据集并上传至华为云OBS桶中。然后通过华为云深度学习服务在线IDE将数据集格式转换成TFRecord格式，操作步骤如下：
+下载冰山图像分类数据集，并上传至华为云OBS桶中，然后通过华为云深度学习服务在线IDE将数据集格式转换成TFRecord格式，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 登录<a href="https://www.kaggle.com/competitions">Kaggle官网</a>，注册并登录账号。
 
-**步骤 2**  &#160; &#160; 选择<a href = "https://www.kaggle.com/c/statoil-iceberg-classifier-challenge">“Statoil/C-CORE Iceberg Classifier Challenge”</a>，进入冰山识别任务简介页面，如图1所示。
-
-图1 冰山识别任务简介页面
-
-<img src="images/冰山识别介绍页.png" width="1000px" />
-
-**步骤 3**  &#160; &#160; 单击“Data”页签，在文件列表中，单击“Download”，下载数据文件，如图2所示。其中，数据文件包括：
-
-- sample_submission.csv： 提交答案的模板。
-- test.json.7z：预测数据集，需要根据该数据集预测出答案，没有分类标签。
-- train.json.7z：训练数据集，有分类标签。
-
-图2 数据下载界面
-
-<img src="images/数据下载界面.png" width="1000px" />
- 
-
-**步骤 4**  &#160; &#160; 下载数据集后，解压训练集和预测集，得到train.json和test.json（该格式可以通过pandas.read_json进行读取）。
+**步骤 1**  &#160; &#160; 下载数据集<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/mnist_example/mnist_data/t10k-images-idx3-ubyte.gz">train.json</a>和<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/mnist_example/mnist_data/t10k-images-idx3-ubyte.gz">test.json</a>，解压缩后得到train.json和test.json（该格式可以通过pandas.read_json进行读取）。
 
 其中，训练集train.json包含4类数据：band\_1、band\_2、inc\_angle和is_iceberg（测试集），分别是：
 
@@ -36,7 +18,7 @@
 - inc_angle：雷达图拍摄角度，单位是角度。
 - is_iceberg： 标注，冰山为1，船为0。
 
-**步骤 5**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将数据集上传至华为云OBS桶 （假设OBS桶路径为：s3://automation/data/）。
+**步骤 5**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将数据集train.json和test.json上传至华为云OBS桶 （假设OBS桶路径为：s3://automation/data/）。
 
 **步骤 6**  &#160; &#160; 参考<a href ="https://support.huaweicloud.com/usermanual-dls/dls_01_0006.html">“访问深度学习服务”</a>章节内容，登录“深度学习服务”管理控制台。
 

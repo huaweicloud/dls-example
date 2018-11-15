@@ -22,7 +22,7 @@
 
 
 
-**步骤 2**  &#160; &#160; .gz数据无需解压，参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，分别上传至华为云OBS桶 （假设OBS桶路径为：s3://dls-test/data/mnist/）。
+**步骤 2**  &#160; &#160; .gz数据无需解压，参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，分别上传至华为云OBS桶 （假设OBS桶路径为：s3://obs-dls/mnist_example/mnist_data/）。
 
 
 ### 2. 训练模型

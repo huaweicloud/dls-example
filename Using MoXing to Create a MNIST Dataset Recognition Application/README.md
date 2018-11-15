@@ -14,11 +14,12 @@
 ### 1. 准备数据
 下载MNIST数据集，解压缩之后上传至OBS桶中。具体操作如下：
 
-**步骤 1**  &#160; &#160; 下载MNIST数据集。下载路径为：http://data.mxnet.io/data/mnist/ 。 数据集文件说明如下：
-- t10k-images-idx3-ubyte.gz：验证集，共包含10000个样本。
-- t10k-labels-idx1-ubyte.gz：验证集标签，共包含10000个样本的类别标签。
-- train-images-idx3-ubyte.gz：训练集，共包含60000个样本。
-- train-labels-idx1-ubyte.gz：训练集标签，共包含60000个样本的类别标签。
+**步骤 1**  &#160; &#160; 下载MNIST数据集， 数据集文件说明如下：
+- t10k-images-idx3-ubyte.gz：验证集，共包含10000个样本。<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/mnist_example/mnist_data/t10k-images-idx3-ubyte.gz">下载数据</a>
+- t10k-labels-idx1-ubyte.gz：验证集标签，共包含10000个样本的类别标签。<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/mnist_example/mnist_data/t10k-labels-idx1-ubyte.gz">下载数据</a>
+- train-images-idx3-ubyte.gz：训练集，共包含60000个样本。<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/mnist_example/mnist_data/train-images-idx3-ubyte.gz">下载数据</a>
+- train-labels-idx1-ubyte.gz：训练集标签，共包含60000个样本的类别标签。<a href = "https://dls-obs.obs.cn-north-1.myhwclouds.com/mnist_example/mnist_data/train-labels-idx1-ubyte.gz">下载数据</a>
+
 
 
 **步骤 2**  &#160; &#160; .gz数据无需解压，参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，分别上传至华为云OBS桶 （假设OBS桶路径为：s3://dls-test/data/mnist/）。

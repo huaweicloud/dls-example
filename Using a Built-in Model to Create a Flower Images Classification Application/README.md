@@ -136,6 +136,12 @@
 
 <img src="images/TensorBoard界面.png" width="800px" />
 
+**<font color=red>注意：</font>**
+
+**<font color=red>训练时间超过一定时间，请及时手动停止，释放资源。否则会导致欠费，尤其对于使用GPU训练的模型项目。</font>**
+
+**<font color=red>训练作业已完成，删除训练作业，以免一直占用资源。</font>**
+
 ### 3. 部署模型
 
 模型训练完成后，可以创建预测作业，将模型部署为在线预测服务，操作步骤如下：
@@ -187,4 +193,6 @@
 
 <img src="images/类别列表.PNG" width="800px" />
 
+**<font color=red>注意：</font>**
 
+**<font color=red>预测请求结束后，后续不使用预测服务的情况下，删除预测作业，以免一直占用资源。</font>**

@@ -48,7 +48,7 @@ def input_fn(run_mode, **kwargs):
     shuffle = True
     file_pattern = 'iceberg-train-*.tfrecord'
   else:
-    num_epochs = 1
+    num_epochs = None
     shuffle = False
     if run_mode == mox.ModeKeys.EVAL:
       num_samples = NUM_SAMPLES_EVAL

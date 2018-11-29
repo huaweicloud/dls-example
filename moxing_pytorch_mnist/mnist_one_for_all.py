@@ -20,7 +20,6 @@ from __future__ import print_function
 
 import argparse
 import moxing.pytorch as mox
-from math import ceil
 
 import torch
 import torch.nn as nn
@@ -33,6 +32,7 @@ parser.add_argument('--data_url', type=str, default=None, help='s3 path of datas
 parser.add_argument('--train_url', type=str, default=None, help='s3 path of outputs')
 parser.add_argument('--batch_size', type=int, default=64, help='batch_size')
 
+# Protect the arguments which are not parsed.
 args, unparsed = parser.parse_known_args()
 
 
@@ -60,6 +60,7 @@ class Net(nn.Module):
 def main():
   # Enable OBS access.
   mox.file.shift('os', 'mox')
+  mox.dist.init_process_group()
 
   dataset = datasets.MNIST(
     args.data_url,
@@ -69,11 +70,12 @@ def main():
       transforms.ToTensor(),
       transforms.Normalize((0.1307,), (0.3081,))
     ]))
-  data_loader = mox.dist.AutoDataLoader(dataset, batch_size=args.batch_size,
-                                      num_workers=14, pin_memory=True)
-  num_batches = ceil(len(data_loader.dataset) / float(args.batch_size))
 
-  model = mox.dist.AutoModule(Net())
+  data_loader = mox.dist.AutoDataLoader(dataset, batch_size=args.batch_size)
+
+  model = Net()
+  model = mox.dist.AutoModule(model)
+
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
 
   for epoch in range(10):
@@ -86,10 +88,11 @@ def main():
       epoch_loss += loss.data
       loss.backward()
       optimizer.step()
-    print('epoch ', epoch, ' : ', epoch_loss / num_batches)
+    print('epoch ', epoch, ' : ', epoch_loss / len(data_loader))
 
   if args.train_url and mox.get_flag('rank') == 0:
     torch.save(model.state_dict(), args.train_url + 'model.pt')
+
 
 if __name__ == "__main__":
   main()

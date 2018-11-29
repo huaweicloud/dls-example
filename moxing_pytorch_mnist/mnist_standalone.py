@@ -20,13 +20,11 @@ from __future__ import print_function
 
 import argparse
 import moxing as mox
-from math import ceil
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
 parser = argparse.ArgumentParser()
@@ -62,7 +60,6 @@ class Net(nn.Module):
 def main():
   # Enable OBS access.
   mox.file.shift('os', 'mox')
-  is_cuda = torch.cuda.is_available()
 
   dataset = datasets.MNIST(
     args.data_url,
@@ -73,30 +70,26 @@ def main():
       transforms.Normalize((0.1307,), (0.3081,))
     ]))
 
-  train_set = DataLoader(
-    dataset, batch_size=args.batch_size, shuffle=True)
-
-  num_batches = ceil(len(train_set.dataset) / float(args.batch_size))
+  data_loader = torch.utils.data.DataLoader(dataset, batch_size=args.batch_size, shuffle=True)
 
   model = Net()
-  if is_cuda:
+  if torch.cuda.is_available():
     model = model.cuda()
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
 
   for epoch in range(10):
     epoch_loss = 0.0
-    for data, target in train_set:
+    for data, target in data_loader:
       optimizer.zero_grad()
-      # move data to GPU:0 and then broadcast to all GPUs if available.
-      data, target = (data.cuda(), target.cuda()) if is_cuda else (data, target)
+      if torch.cuda.is_available():
+        data, target = (data.cuda(), target.cuda())
       output = model(data)
       loss = F.nll_loss(output, target)
-      # Sum up loss for one epoch and print the average value.
       epoch_loss += loss.data
       loss.backward()
       optimizer.step()
-    print('epoch ', epoch, ' : ', epoch_loss / num_batches)
+    print('epoch ', epoch, ' : ', epoch_loss / len(data_loader))
 
   if args.train_url:
     torch.save(model.state_dict(), args.train_url + 'model.pt')

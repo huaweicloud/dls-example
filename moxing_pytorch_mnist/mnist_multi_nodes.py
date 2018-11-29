@@ -18,11 +18,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import sys
 import argparse
-import multiprocessing as mp
 import moxing as mox
-from math import ceil
 
 import torch
 import torch.nn as nn
@@ -41,7 +38,9 @@ parser.add_argument('--init_method', type=str, default=None, help='master addres
 parser.add_argument('--rank', type=int, default=0, help='Index of current task')
 parser.add_argument('--world_size', type=int, default=1, help='Total number of tasks')
 
+# Protect the arguments which are not parsed.
 args, unparsed = parser.parse_known_args()
+
 
 
 class Net(nn.Module):
@@ -65,10 +64,13 @@ class Net(nn.Module):
     return F.log_softmax(x, dim=1)
 
 
-def run():
+def main():
   # Enable OBS access.
   mox.file.shift('os', 'mox')
-  is_cuda = torch.cuda.is_available()
+  dist.init_process_group(backend='nccl',
+                          init_method=args.init_method,
+                          rank=args.rank,
+                          world_size=args.world_size)
 
   dataset = datasets.MNIST(
     args.data_url,
@@ -78,19 +80,16 @@ def run():
       transforms.ToTensor(),
       transforms.Normalize((0.1307,), (0.3081,))
     ]))
+
   train_sampler = distributed.DistributedSampler(dataset,
                                                  num_replicas=args.world_size,
                                                  rank=args.rank)
-  train_set = torch.utils.data.DataLoader(dataset, batch_size=args.batch_size,
-                                          shuffle=False, sampler=train_sampler,
-                                          num_workers=14, pin_memory=True)
-
-  num_batches = ceil(len(train_sampler) / float(args.batch_size))
+  data_loader = torch.utils.data.DataLoader(dataset, batch_size=args.batch_size,
+                                            shuffle=False, sampler=train_sampler)
 
   model = Net()
-  if is_cuda:
+  if torch.cuda.is_available():
     model = model.cuda()
-
   model = torch.nn.parallel.DistributedDataParallel(model)
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
@@ -98,35 +97,20 @@ def run():
   for epoch in range(10):
     epoch_loss = 0.0
     train_sampler.set_epoch(epoch)
-    for data, target in train_set:
+    for data, target in data_loader:
       optimizer.zero_grad()
-      # move data to GPU:0 and then broadcast to all GPUs if available.
-      data, target = (data.cuda(), target.cuda()) if is_cuda else (data, target)
+      if torch.cuda.is_available():
+        data, target = (data.cuda(), target.cuda())
       output = model(data)
       loss = F.nll_loss(output, target)
-      # Sum up loss for one epoch and print the average value.
       epoch_loss += loss.data
       loss.backward()
       optimizer.step()
-    print('epoch ', epoch, ' : ', epoch_loss / num_batches)
+    print('epoch ', epoch, ' : ', epoch_loss / len(data_loader))
 
   if args.train_url and dist.get_rank() == 0:
     torch.save(model.state_dict(), args.train_url + 'model.pt')
 
 
-def main():
-  dist.init_process_group(backend='nccl',
-                          init_method=args.init_method,
-                          rank=args.rank,
-                          world_size=args.world_size)
-  run()
-
-
 if __name__ == "__main__":
-  if not (sys.version_info[0] >= 3 and sys.version_info[1] >= 4):
-    raise ValueError('PyTorch distributed running with `DistributedDataParallel` '
-                     'only support python >= 3.4')
-  # change the multiprocessing start method to spawn before main is called, see:
-  # https://pytorch.org/docs/stable/nn.html?highlight=distributeddataparallel#torch.nn.parallel.DistributedDataParallel
-  mp.set_start_method('spawn')
   main()

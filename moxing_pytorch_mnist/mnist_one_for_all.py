@@ -83,6 +83,8 @@ def main():
     data_loader.set_epoch(epoch)
     for data, target in data_loader:
       optimizer.zero_grad()
+      if torch.cuda.is_available():
+        target = target.cuda(non_blocking=True)
       output = model(data)
       loss = F.nll_loss(output, target)
       epoch_loss += loss.data

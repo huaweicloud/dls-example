@@ -25,15 +25,14 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
+import torch.multiprocessing as mp
 from torchvision import datasets, transforms
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--data_url', type=str, default=None, help='s3 path of dataset')
 parser.add_argument('--train_url', type=str, default=None, help='s3 path of outputs')
 parser.add_argument('--batch_size', type=int, default=64, help='batch_size')
-
-# Protect the arguments which are not parsed.
-args, unparsed = parser.parse_known_args()
+parser.add_argument('--mp', type=bool, default=False, help='Multiprocess distributed mode')
 
 
 class Net(nn.Module):
@@ -57,10 +56,10 @@ class Net(nn.Module):
     return F.log_softmax(x, dim=1)
 
 
-def main():
+def main_worker(gpu, args):
   # Enable OBS access.
   mox.file.shift('os', 'mox')
-  mox.dist.init_process_group()
+  mox.dist.init_process_group(mp=args.mp, gpu=gpu)
 
   dataset = datasets.MNIST(
     args.data_url,
@@ -83,18 +82,26 @@ def main():
     data_loader.set_epoch(epoch)
     for data, target in data_loader:
       optimizer.zero_grad()
-      if torch.cuda.is_available():
-        target = target.cuda(non_blocking=True)
       output = model(data)
+      if not args.mp and torch.cuda.is_available():
+        target = target.cuda(non_blocking=True)
       loss = F.nll_loss(output, target)
       epoch_loss += loss.data
       loss.backward()
       optimizer.step()
-    print('epoch ', epoch, ' : ', epoch_loss / len(data_loader))
+    if gpu is None or gpu == 0:
+      print('epoch ', epoch, ' : ', epoch_loss / len(data_loader))
 
   if args.train_url and mox.get_flag('rank') == 0:
     torch.save(model.state_dict(), args.train_url + 'model.pt')
 
 
 if __name__ == "__main__":
-  main()
+  # Protect the arguments which are not parsed.
+  args, unparsed = parser.parse_known_args()
+
+  if args.mp:
+    mp.spawn(main_worker, nprocs=torch.cuda.device_count(),
+             args=(args,))
+  else:
+    main_worker(None, args)

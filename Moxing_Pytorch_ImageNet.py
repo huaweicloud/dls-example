@@ -51,7 +51,8 @@ parser.add_argument('--mp', type=bool, default=False, help='Multiprocess distrib
 
 
 def main_worker(gpu, args):
-
+  # Enable OBS access.
+  mox.file.shift('os', 'mox')
   mox.dist.init_process_group(mp=args.mp, gpu=gpu)
 
   # Auto Model
